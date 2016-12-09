@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Python守护线程研究 by xuncl</title>
+    <title>从零开始大数据 by xuncl</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,77 +11,114 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Python守护线程研究</h1>
+      <h1 class="project-name">从零开始大数据</h1>
       <h2 class="project-tagline"></h2>
     </section>
 
     <section class="main-content">
       <h1>
-<a id="python-守护线程研究" class="anchor" href="#python-%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%A0%94%E7%A9%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python 守护线程研究</h1>
+<a id="从零开始大数据" class="anchor" href="#%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%A4%A7%E6%95%B0%E6%8D%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>从零开始大数据</h1>
 
-<h3>
-<a id="python的线程是python自己实现的还是系统实现的" class="anchor" href="#python%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%98%AFpython%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%98%E6%98%AF%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E7%9A%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>python的线程是python自己实现的还是系统实现的？</h3>
+<p>这篇文章是我近期来探索自学大数据时收集的一些资料，因此比起一篇教程，本文更像是一篇笔记。如果有不到之处，欢迎指正交流。</p>
 
-<p>python线程其实是系统线程。
-一些操作系统（比如linux）能给出所有已经跑起来的python线程列表，这说明python线程是基于操作系统的，在其他操作系统里，你可能在查看进程列表时看不到正在跑的线程。
-如果所有的非守护进程结束了，整个进程就会停止。此时，所有的守护线程就会被终止。所以守护线程是整个进程的一部分，但是无法阻止进程停止（普通线程可以）。守护线程是纯python实现。一个进程在<code>_exit</code>方法被调用后就会终止，届时所有的进程都会被杀死，当主线程终止时（或<code>sys.exit</code>被调用），python解释器会查看是不是还有非守护线程活着，如果没有，它就会调用<code>_exit</code>，否则就等费守护先成退出。</p>
+<p>首先，大数据的学习在我看来，是一连串学科的集合。其中占主要部分的是编程，分析，NLP（Natural Language Processing 人工智能自然语言处理），MLP（Multi-layer Perceptron 多层神经网络），当然，还有英语。</p>
 
-<p>下面探讨守护线程的问题：守护线程的标志位是用纯python实现的，通过<code>threading</code>模组，当模组导入后，一个Thread对象就建立起来代替了主线程，并且它的<code>_exitfunc</code>方法被钩子<code>atexit</code>注册了。
-这个函数的源码：</p>
+<p>既然标题说了“从零开始”，就要让真正零基础的人达到可以自学的基础。下面是我从Quora上扒过来路线图，里面的连接都是英文教程，相关的中文教程也有很多，大家自己百度吧。</p>
 
-<pre><code>class _MainThread(Thread):
+<ul>
+<li>计算机入门：Udacity - intro to CS course,Coursera - Computer Science 101</li>
+<li>至少学会一种面向对象的语言：C++，Java或者python，在线教程:Coursera - Learn to Program: The Fundamentals,MIT Intro to Programming in Java,Google's Python Class,Coursera - Introduction to Python,Python Open Source E-Book</li>
+<li>学一些其他语言，根据你的喜好，可以选：Java Script, CSS, HTML, Ruby, PHP, C, Perl, Shell. Lisp, Scheme.在线教程: w3school.com - HTML Tutorial, Learn to code</li>
+<li>代码测试：在线教程: Udacity - Software Testing Methods, Udacity - Software Debugging</li>
+<li>理解逻辑运算，了解一些离散数学的知识：在线教程:MIT Mathematics for Computer Science,Coursera - Introduction to Logic,Coursera - Linear and Discrete Optimization,Coursera - Probabilistic Graphical Models,Coursera - Game Theory.</li>
+<li>理解算法和数据结构：学习一些基础的数据结构（栈，队列，包），排序算法（快速排序，归并排序，堆排序），和一些数据结构（二叉树，红黑树，哈希表），以及时间复杂度等。在线教程:MIT Introduction to Algorithms,Coursera - Introduction to Algorithms Part 1 &amp; Part 2,Wikipedia - List of Algorithms,Wikipedia - List of Data Structures,Book: The Algorithm Design Manual</li>
+<li>深入理解操作系统：在线教程: UC Berkeley Computer Science 162</li>
+<li>学习人工智能：在线教程:Stanford University - Introduction to Robotics, Natural Language Processing, Machine Learning</li>
+<li>学习编译器：在线教程: Coursera - Compilers</li>
+<li>学习加密技术：在线教程: Coursera - Cryptography, Udacity - Applied Cryptography</li>
+<li>学习并发：在线教程: Coursera - Heterogeneous Parallel Programming</li>
+</ul>
 
-    def _exitfunc(self):
-        self._Thread__stop()
-        t = _pickSomeNonDaemonThread()
-        if t:
-            if __debug__:
-                self._note("%s: waiting for other threads", self)
-        while t:
-            t.join()
-            t = _pickSomeNonDaemonThread()
-        if __debug__:
-            self._note("%s: exiting", self)
-        self._Thread__delete()
-</code></pre>
+<h4>
+<a id="学习大数据需要掌握的一些概念或工具" class="anchor" href="#%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5%E6%88%96%E5%B7%A5%E5%85%B7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>学习大数据需要掌握的一些概念或工具：</h4>
 
-<p>这个函数被python解释器调用时机为：<code>sys.exit</code>调用时或者主线程终止时。这个方法结束后，解释器会调用系统的<code>_exit</code>函数.当<code>_exit</code>调用后，操作系统会终止这个进程里的所有线程，然后终止进程。Python在存在非守护线程存活时不会调用<code>_exit</code>函数。</p>
+<p><strong>Hadoop</strong>是一个由Apache基金会所开发的分布式系统基础架构，使用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。Hadoop实现了一个分布式文件系统（Hadoop Distributed File System），简称HDFS。HDFS有高容错性的特点，并且设计用来部署在低廉的（low-cost）硬件上；而且它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。HDFS放宽了（relax）POSIX的要求，可以以流的形式访问（streaming access）文件系统中的数据。</p>
 
-<h3>
-<a id="所有的线程都是进程的一部分" class="anchor" href="#%E6%89%80%E6%9C%89%E7%9A%84%E7%BA%BF%E7%A8%8B%E9%83%BD%E6%98%AF%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>所有的线程都是进程的一部分。</h3>
+<p><strong>MapReduce</strong> 是一个应用运行的框架，它用于大规模数据集（大于1TB）的并行运算。概念"Map（映射）"和"Reduce（归约）"，是它们的主要思想，都是从函数式编程语言里借来的，还有从矢量编程语言里借来的特性。它极大地方便了编程人员在不会分布式并行编程的情况下，将自己的程序运行在分布式系统上。 </p>
 
-<p>我曾以为守护线程不属于进程的一部分（见python官方解释），这其实是错的， 对操作系统来说，一个进程是许多线程的集合，每个线程在操作系统看来都是一样的（对操作系统来说，主线程没什么特别的，他只是在运行结束后最后调用<code>_exit</code>函数而已）。而且操作系统也不认识守护线程，这些都是python自己的概念。
-python解释器使用原生线程来实现python的线程，只是记录了每个线程怎么创建的。解释器通过<code>atexit</code>钩子保证了<code>_exit</code>只会在没有非守护线程时结束，文档中的“这个python”程序，指的就是整个进程。</p>
+<blockquote>
+<p>我对MapReduce的理解，是它把输入的数据集分成独立的区块，然后由map任务来并行处理。整个框架会把这些map的输出作为reduce任务的输入。两种任务的输入输出都是存在文件系统里的。而且框架会自己对任务进行调度、监控以及自动重启失败的任务。</p>
+</blockquote>
 
-<p>下面的代码能帮助理解普通线程和守护线程的区别：</p>
+<p><strong>Corona</strong> 是一个最新的分布式集群调度管理框架，他首先有个一集群管理器（Cluster Manager），在此基础上引入了工作追踪器（Job Tracker）监控集群中的每一个节点和空闲的资源总量。每个工作追踪器对应一个工作，并可以灵活地在进程内运行（针对较小的工作），也可以单独作为一个进程运行（针对大工作）。</p>
 
-<pre><code>import sys
-import time
-import threading
+<blockquote>
+<p>Corana和前面的Hadoop MapReduce实例最大的区别是Corona的调度是基于推送的，而非基于拉取的。当集群管理器从工作追踪器收到资源需求时，它会把资源许可推给工作追踪器，同时，工作追踪器一拿到资源许可，就会创建新的任务，然后把这些任务推给任务追踪器（Task Tracker），任务在任务追踪器里运行。整个这一套流程没有任何心跳机制，所以开发者考虑的潜在因素更少，从这个方面看，选择这个框架的开发效率会更高一些。参考 : Under the Hood: Scheduling MapReduce jobs more efficiently with Corona</p>
+</blockquote>
 
-class WorkerThread(threading.Thread):
+<p><strong>Apache spark</strong> 是AMP实验室和UC伯克联合研制的一款开源的数据分析集群的计算框架。Spark已经纳入了Hadoop的开源社区，运行在在Hadoop分布式文件系统（HDFS）上。但是，Spark并未引入MapReduce的两个阶段的范例，并且声称将应用在内存中的运行速度提升100倍。</p>
 
-    def run(self):
-        while True:
-            print 'Working hard'
-            time.sleep(0.5)
+<p><strong>数据库管道技术（Database Pipelining）</strong> 就像你看到的那样，大数据不光处理数据，还涉及到很多其他部分，比如：收集器，存储，挖掘，机器学习，可视化等等，保证数据的流转，就要用到管道技术。</p>
 
-def main(args):
-    use_daemon = False
-    for arg in args:
-        if arg == '--use_daemon':
-            use_daemon = True
-    worker = WorkerThread()
-    worker.setDaemon(use_daemon)
-    worker.start()
-    time.sleep(1)
-    sys.exit(0)
+<p><strong>SOLR</strong>  是一个高度可伸缩的数据搜索引擎，可以极快速甚至实时地完成搜索。Solr 来自Apache Lucence 项目的企业级开源搜索平台。它提供了全文本搜索，命中高亮，层面搜索，动态聚类，数据库集成以及富文本（word,PDF等）处理等等特性。Solr提供了分布式搜索和索引复制的功能，让它有很高的工作弹性。Solr现在非常火，而且最新的Solr 4引入了NoSQL特性。</p>
 
-if __name__ == '__main__':
-    main(sys.argv[1:])
-</code></pre>
+<p><strong>S3</strong> - 亚马逊的 S3 是AWS提供的在线文件存储服务。</p>
 
-<p>如果执行这段代码时加上参数<code>--use_daemon</code>，你会看到程序只打印了几行<code>working hard</code>，否则不加参数，程序不会停下来。不加<code>--use_daemon</code>标记时，即使主程序结束了整个程序也不会停下。</p>
+<p><strong>HBase</strong> 是一个开源的、非关系型的、分布式数据库。它是在谷歌BigTable基础上用Java写的，同时也是Apache Hadoop的子项目之一。它运行在Hadoop分布式文件系统(HDFS)上，为hadoop提供容器。HBase的特征是用容错的方式存储稀疏数据（就是少量有用的数据伴随大量无用数据，比如从2亿条记录中找出前100条最符合条件的值）。</p>
+
+<p><strong>Zookeepe</strong> 是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。</p>
+
+<p><strong>Hive</strong> 是一个建立在Hadoop架构之上的数据仓库。可以将结构化的数据文件映射为一张数据库表，并提供简单的SQL查询功能，可以将SQL语句转换为MapReduce任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
+
+<p><strong>Mahout</strong> 是一个提供可扩展的机器学习领域经典算法的实现的开源项目，旨在帮助开发人员更加方便快捷地创建智能应用程序。Mahout包含许多实现，包括聚类、分类、推荐过滤、频繁子项挖掘。通过使用 Apache Hadoop 库，Mahout 可以有效地扩展到云中。据我所知，Mahout也提供了一些java类库，用于一些数学计算（比如线性代数和统计）。作为一个正在快速发展的项目，Mahout上实现的算法实例正在迅速增加。</p>
+
+<p><strong>Lucene</strong>是一套用于全文检索和搜寻的开放源码程式库，它提供了一个简单却强大的应用程序界面，能够做全文索引和搜寻。它其实是前面介绍的Solr的内核，Solr相较于它提供了方便的Restful API接口。</p>
+
+<p><strong>Sqoop</strong> 是一个结构化数据（如关系数据库）与Apache Hadoop之间的数据转换工具。如果你每天晚上需要自动地从自己数据库同步数据到云端的Hive仓库上，那么你会用到它。</p>
+
+<p><strong>Hue</strong> 是一个基于web的界面应用，它集成了上面的Solr以及Sqoop，它可以让你直接把Hadoop“用起来”，而不必关心底层。比如Sqoop本身只是一个命令行工具，而在Hue上，你可对其进行界面化操作。 </p>
+
+<p><strong>Pregel 以及开源的Giraph</strong> 是可以对巨大图进行迭代的图计算系统，据说在数百台计算机组成的集群上运行时图的规模可以达到万亿级别（边的数量），而计算时间只有数分钟。</p>
+
+<p><strong>NLTK</strong> - The Natural Language Toolkit, 自然语言工具包，是面向python的一整套符号及静态自然语言处理的类库和程序，它包含图像展示功能和样本数据，它在各大院校里已经用的很广泛了，在语言学、认知科学、人工智能、信息提取以及机器学习等学科的教学和研究上，它起了很多作用。</p>
+
+<h4>
+<a id="一些python的类库别自己造轮子" class="anchor" href="#%E4%B8%80%E4%BA%9Bpython%E7%9A%84%E7%B1%BB%E5%BA%93%E5%88%AB%E8%87%AA%E5%B7%B1%E9%80%A0%E8%BD%AE%E5%AD%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>一些Python的类库，别自己造轮子：</h4>
+
+<p><strong>Scikit Learn</strong>：大名鼎鼎的机器学习库。   </p>
+
+<p><strong>Numpy</strong>：科学计算包，相当于python版的MatLab。</p>
+
+<p><strong>Scipy</strong> ：也是一个科学计算包，偏工程一点，包含傅里叶变换、信号处理什么的。</p>
+
+<h4>
+<a id="两个可以做数据源的网站" class="anchor" href="#%E4%B8%A4%E4%B8%AA%E5%8F%AF%E4%BB%A5%E5%81%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E7%BD%91%E7%AB%99" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>两个可以做数据源的网站：</h4>
+
+<p><strong>Freebase</strong> 是个类似wikipedia的创作共享类网站，所有内容都由社区用户添加，采用创意共用许可证，可以自由引用。两者之间最大的不同在于，Freebase中的条目都采用结构化数据的形式（metadata 也叫元数据），而wikipedia不是。这个特性使得它成为一个非常好的数据源。</p>
+
+<p><strong>DBPedia</strong> : DBpedia 是一个很特殊的语义网应用工程，它从维基百科(Wikipedia)的词条里撷取出结构化的资料，以强化维基百科的搜寻功能，并将其他资料集连结至维基百科。透过这样的语意化技术的介入，让维基百科的庞杂资讯有了许多创新而有趣的应用，例如手机版本、地图整合、多面向搜寻、关系查询、文件分类与标注等等。DBpedia 同时也是世界上最大的多领域知识本体之一。</p>
+
+<h4>
+<a id="可视化工具-" class="anchor" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>可视化工具 ：</h4>
+
+<p><strong>ggplot（R语言）</strong>: 一个强大的统计工具，在知乎上讨论很多，有兴趣的可以自己发掘。
+<strong>Tableu</strong>：一个商业化的企业级应用。
+<strong>Qlikview</strong>：和上面一样，都运用在商业化分析上。
+<strong>DataV</strong>：阿里云的产品，刚上线。</p>
+
+<h4>
+<a id="数学" class="anchor" href="#%E6%95%B0%E5%AD%A6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>数学：</h4>
+
+<p>统计，概率，线性代数和坐标几何。</p>
+
+<h4>
+<a id="其他我想到的" class="anchor" href="#%E5%85%B6%E4%BB%96%E6%88%91%E6%83%B3%E5%88%B0%E7%9A%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>其他我想到的：</h4>
+
+<p><strong>NER</strong>- Named Entity Recognition 命名实体识别，是信息提取、问答系统、句法分析、机器翻译、面向Semantic Web的元数据标注等应用领域的重要基础工具，在自然语言处理技术走向实用化的过程中占有重要地位。</p>
+
+<p><strong>分面搜索</strong> 是一种搜索方式，分面是指事物的多维度属性。例如一本书包含主题、作者、年代等分面。而分面搜索是指通过事物的这些属性不断筛选、过滤搜索结果的方法。可以将分面搜索看成搜索和浏览的结合。</p>
+
+<p><em>参考来源：维基百科，百度百科，Quora，知乎</em></p>
 
       <footer class="site-footer">
 
