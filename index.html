@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>编写向前兼容的Python代码 by xuncl</title>
+    <title>荀辰龙的笛卡尔剧场 by xuncl</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,226 +11,62 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">编写向前兼容的Python代码</h1>
-      <h2 class="project-tagline"></h2>
+      <h1 class="project-name">荀辰龙的笛卡尔剧场</h1>
+      <h2 class="project-tagline">这个人很懒，他正尝试变得勤快一点</h2>
     </section>
 
     <section class="main-content">
       <h1>
-<a id="编写向前兼容的python2代码" class="anchor" href="#%E7%BC%96%E5%86%99%E5%90%91%E5%89%8D%E5%85%BC%E5%AE%B9%E7%9A%84python2%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>编写向前兼容的Python2代码</h1>
+<a id="博文列表" class="anchor" href="#%E5%8D%9A%E6%96%87%E5%88%97%E8%A1%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>博文列表</h1>
 
-<p>最近一些需求开始接触Python，由于使用的第三方框架的限制，一直都在2.7的版本上活动。前一段时间看了一篇文章，讲CTO最重要的一个素质就是具备强烈的“还债”意识，便意识到我现在为了自己方便，没准也是为未来埋下一颗定时炸弹。</p>
+<h3>
+<a id="敏捷小记" class="anchor" href="#%E6%95%8F%E6%8D%B7%E5%B0%8F%E8%AE%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.xuncl.com/agileTips/">敏捷小记</a>
+</h3>
 
-<p>众所周知Python什么都好，就是Python2和Python3之间的不兼容问题让人头大。除了不兼容，目前使用Python3的最大问题是没有像Python2那么多的支持库，或者说把目前Python2的支持库导入Python3要花费巨量的工作。所以我还是选择了Python2的版本，但是为了以后自己“还债”能轻松一些，我这几天抽空查了些资料，并把所得写在这里。</p>
+<p>2016/12/06 </p>
 
-<p>以下这些建议适用于刚开始开发的Python2工程，在一开始做好这些准备，日后决定升级到Python3时会节省很多精力。</p>
+<h3>
+<a id="python守护线程分析" class="anchor" href="#python%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E5%88%86%E6%9E%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.xuncl.com/pythonDaemonThreads/">Python守护线程分析</a>
+</h3>
 
-<h2>
-<a id="不要低于26" class="anchor" href="#%E4%B8%8D%E8%A6%81%E4%BD%8E%E4%BA%8E26" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>不要低于2.6</h2>
+<p>2016/10/17 </p>
 
-<p>如果你正在开始一个新项目，不要低于2.6版本。从这个版本增加了许多让你有今后可以更容易升级到Python3的特性。如果你的新项目没必要支持更老版本Python，那么你的代码里现在添加一些明确的选项，就可以使用很多Python3的功能。</p>
+<h3>
+<a id="用机器学习轻松减肥" class="anchor" href="#%E7%94%A8%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%BD%BB%E6%9D%BE%E5%87%8F%E8%82%A5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.xuncl.com/loseWeightML/">用机器学习轻松减肥</a>
+</h3>
 
-<p>在代码开始引入<code>__future__</code>模块，按照官方的说法，在这个模块中存在的特性最终都将成为Python语言标准的一部分，因此建议从现在开始在<code>__future__</code>中import使用以下项目：</p>
+<p>2016/10/09 </p>
 
-<ul>
-<li>
-<code>division</code>，精确除法。最好在所有Python2中导入精确除法，这样你不必在不同的文件中不得不是不是回到文件头看究竟是那种除法在活动。因为在python3中，精确除法是唯一默认，所以如果你正要开始一个新工程，建议你最好现在就用起来，而且是全部用起来。</li>
-<li>
-<code>absolute_import</code>，绝对地址导入。这是最重要的一个。再也不会有 <code>from xml import bar</code> 时会<code>import</code>进来一个和你当前代码同级.xml文件了，现在只需要简单地<code>from .xml import bar</code>就能得到你想要的。歧义更少也更好用了。</li>
-</ul>
+<h3>
+<a id="从零开始大数据" class="anchor" href="#%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%A4%A7%E6%95%B0%E6%8D%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.xuncl.com/bigDataFromZero/">从零开始大数据</a>
+</h3>
 
-<p>关于把<code>print</code>作为函数的未来导入，我建议先不用它，以防造成歧义。尤其是所有的编辑器都会把它作为保留字进行高亮。我们要极力避免同样的事物在不同的文件中有不同的行为。再加上<code>print</code>在2.6已经可以支持作为函数使用了，运行2to3也会给出兼容性提示，所有也没有必要强行使用<code>print</code>的future导入。</p>
+<p>2016/10/04 </p>
 
-<p>虽然看起来很吸引人，但是<code>unicode_literals</code>的未来导入也不建议用。因为我们使用的所有API很可能要为此改变它支持的字符串类型。当然在某些地方这个特性导入是有用的，更多是仅限于那些低版本的接口和库，然而它们升到2.6以后自己会使用这个导入。为了使用<code>b'foo'</code>这样的字面值你也不需要特殊导入，它在Python2里就是可用的，而且可以防止2to3错误地把它转换为unicode。</p>
+<h3>
+<a id="编写向前兼容python2代码" class="anchor" href="#%E7%BC%96%E5%86%99%E5%90%91%E5%89%8D%E5%85%BC%E5%AE%B9python2%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.xuncl.com/forwardsCompatiblePython/">编写向前兼容Python2代码</a>
+</h3>
 
-<h2>
-<a id="文件io与unicode" class="anchor" href="#%E6%96%87%E4%BB%B6io%E4%B8%8Eunicode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>文件IO与Unicode</h2>
+<p>2016/09/25 </p>
 
-<p>文件IO在Python3中变化很大。好消息是如果你正在开发新工程，你可以明确指定Unicode来节省很多麻烦。</p>
+<hr>
 
-<p>如果你处理文本数据，使用<code>codecs.open</code>功能来打开文件。一般情况下记得使用utf-8，除非是Unicode独有的定义或操作。对于二进制IO要保证使用<code>'rb'</code>打开而不是<code>'r'</code>，当然在window环境时需要合适的支持。</p>
-
-<p>如果你处理字节数据，记得标记为<code>b'foo'</code>而非<code>'foo'</code>，这样能告诉2to3不要吧这些字面值转化为Unicode。在2.x版本中，要留意下面的不同：</p>
-
-<pre><code>&gt;&gt;&gt; b'foo'
-'foo'
-&gt;&gt;&gt; b'foo'[0]
-'f'
-&gt;&gt;&gt; b'foo' + u'bar'
-u'foobar'
-&gt;&gt;&gt; list(b'foo')
-['f', 'o', 'o']
-</code></pre>
-
-<p>而在Python3中处理结果则是：</p>
-
-<pre><code>&gt;&gt;&gt; b'foo'[0]
-102
-&gt;&gt;&gt; b'foo' + 'bar'
-Traceback (most recent call last):
-  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
-TypeError: can't concat bytes to str
-&gt;&gt;&gt; list(b'foo')
-[102, 111, 111]
-Traceback (most recent call last):
-  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
-TypeError: can't concat bytes to str
-</code></pre>
-
-<p>作为兼容代码，你可以这么做：</p>
-
-<pre><code>&gt;&gt;&gt; b'foo'[0:0 + 1]
-b'f'
-&gt;&gt;&gt; b'foo' + 'bar'.encode('latin1')
-b'foobar'
-&gt;&gt;&gt; to_charlist = lambda x: [x[c:c + 1] for c in range(len(x))]
-&gt;&gt;&gt; to_charlist(b'foo')
-[b'f', b'o', b'o']
-</code></pre>
-
-<h2>
-<a id="2to3安全第一" class="anchor" href="#2to3%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2to3，安全第一</h2>
-
-<p>2to3是个好东西，但你还是要小心一些，因为使用2to3转换中好多东西可能适得其反，——其中有些功能仍有bug，有些需要你足够的理解才能保证可行。以下是一些例子：</p>
-
-<h4>
-<a id="字符串的递归错误" class="anchor" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%80%92%E5%BD%92%E9%94%99%E8%AF%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>字符串的递归错误</h4>
-
-<p>许多人会在python2中写下面这样的代码：</p>
-
-<pre><code>class Foo(object):
-    def __str__(self):
-        return unicode(self).encode('utf-8')
-    def __unicode__(self):
-        return u'Hello World'
-</code></pre>
-
-<p>2to3会假定的api不兼容unicode，然后把你的代码转化成这样：</p>
-
-<pre><code>class Foo(object):
-    def __str__(self):
-        return str(self).encode('utf-8')
-    def __unicode__(self):
-        return 'Hello World'
-</code></pre>
-
-<p>这就错了，第一这样Python3代码里里根本就没有用到<code>__unicode__</code>，第二<code>__str__</code>递归调用了自己，在别处初始化<code>Foo</code>时会报<code>runtime error</code>。解决这个问题，需要下一个2to3的第三方修正程序，或者自己写一个小小的帮助类：</p>
-
-<pre><code>import sys
-
-class UnicodeMixin(object):
-    if sys.version_info &gt; (3, 0):
-        __str__ = lambda x: x.__unicode__()
-    else:
-        __str__ = lambda x: unicode(x).encode('utf-8')
-
-class Foo(UnicodeMixin):
-    def __unicode__(self):
-        return u'Hello World'
-</code></pre>
-
-<p>这样虽然你在Python3代码里仍然还有<code>__unicode__</code>方法，但人畜无害。当某天你决定放弃对Python2支持，你只需要遍历一遍<code>UnicodeMixin</code>的所有子类，把<code>__unicode__</code>改成<code>__str__</code>，然后把这个帮助类删除就好了。</p>
-
-<h4>
-<a id="字符串比较" class="anchor" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>字符串比较</h4>
-
-<p>下面这个问题，在Python2里是正确的：</p>
-
-<pre><code>&gt;&gt;&gt; 'foo' == u'foo'
-True
-</code></pre>
-
-<p>Python3则是：</p>
-
-<pre><code>&gt;&gt;&gt; b'foo' == 'foo'
-False
-</code></pre>
-
-<p>雪上加霜的是Python2和Python3对这样的情况连个warning都不给。这里提供一个帮助模组unicode_nazi，通过引入它，下次处理到unicode和字节字符混合操作时，就会得到提示。</p>
-
-<pre><code>&gt;&gt;&gt; import unicodenazi
-&gt;&gt;&gt; u'foo' == 'foo'
-__main__:1: UnicodeWarning: Implicit conversion of str to unicode
-True
-</code></pre>
-
-<p>但是要记住这个模组有时候是很烦人的，而且需要一定的运行花费。</p>
+<h1>
+<a id="个人简介" class="anchor" href="#%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>个人简介</h1>
 
 <h5>
-<a id="总之2to3工具的转换要谨慎甚至可以把它当做是一个兼容性检查的工具然后根据它的输出结果手动修改代码" class="anchor" href="#%E6%80%BB%E4%B9%8B2to3%E5%B7%A5%E5%85%B7%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%A6%81%E8%B0%A8%E6%85%8E%E7%94%9A%E8%87%B3%E5%8F%AF%E4%BB%A5%E6%8A%8A%E5%AE%83%E5%BD%93%E5%81%9A%E6%98%AF%E4%B8%80%E4%B8%AA%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A3%80%E6%9F%A5%E7%9A%84%E5%B7%A5%E5%85%B7%E7%84%B6%E5%90%8E%E6%A0%B9%E6%8D%AE%E5%AE%83%E7%9A%84%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E6%89%8B%E5%8A%A8%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>总之：2to3工具的转换要谨慎，甚至可以把它当做是一个兼容性检查的工具，然后根据它的输出结果手动修改代码。</h5>
+<a id="java开发者创业中努力学习全栈技术" class="anchor" href="#java%E5%BC%80%E5%8F%91%E8%80%85%E5%88%9B%E4%B8%9A%E4%B8%AD%E5%8A%AA%E5%8A%9B%E5%AD%A6%E4%B9%A0%E5%85%A8%E6%A0%88%E6%8A%80%E6%9C%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Java开发者，创业中，努力学习全栈技术……</h5>
 
-<h2>
-<a id="字符串到底是什么" class="anchor" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>字符串到底是什么</h2>
+<h5>
+<a id="联系我xunclxunclcom" class="anchor" href="#%E8%81%94%E7%B3%BB%E6%88%91xunclxunclcom" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>联系我：<a href="xuncl@xuncl.com">xuncl@xuncl.com</a>
+</h5>
 
-<p>下面这个表，左侧是python2里作为字节字符串类型出现的地方，右侧是对应的地方在python3里的实际类型。</p>
+<h5>
+<a id="github-githubcomxuncl" class="anchor" href="#github-githubcomxuncl" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>github: <a href="https://github.com/xuncl">github.com/xuncl</a>
+</h5>
 
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>Python3中的类型<code>(unicode==str)</code>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>identifiers 标识符</td>
-<td>unicode</td>
-</tr>
-<tr>
-<td>Docstrings 文档字符串</td>
-<td>unicode</td>
-</tr>
-<tr>
-<td><code>__repr__</code></td>
-<td>unicode</td>
-</tr>
-<tr>
-<td>字典中字符串类型的键</td>
-<td>unicode</td>
-</tr>
-<tr>
-<td>WSGI的environment键</td>
-<td>unicode</td>
-</tr>
-<tr>
-<td>HTTP的header值，WSGI的environment值</td>
-<td>unicode，仅限于ASCII 3.1以及latin1 3.2</td>
-</tr>
-<tr>
-<td>URL</td>
-<td>unicode，但是有的API也能接受字节字符串。特别提醒：你的URL必须是UTF-8编码才能获取所有的标准库支持。</td>
-</tr>
-<tr>
-<td>文件名</td>
-<td>unicode或字节。大部分API都能同时接受两者，但不支持互相转换。</td>
-</tr>
-<tr>
-<td>二进制内容</td>
-<td>字节或字节数组。注意：第二种类型是不定的。所以要意识到自己可以有一种字面字符串又不定的对象。</td>
-</tr>
-<tr>
-<td>Python代码</td>
-<td>unicode。你如果想把你的源码转为可执行对象的话，要自己解码。</td>
-</tr>
-</tbody>
-</table>
-
-<h2>
-<a id="latin1的特殊性" class="anchor" href="#latin1%E7%9A%84%E7%89%B9%E6%AE%8A%E6%80%A7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Latin1的特殊性</h2>
-
-<p>在一些场景下（举个例子WSGI）你使用的unicode字符串必须属于latin1子集，这是因为HTTP本身在编码的规则上就不明确，所以用latin1来作为一种明确且安全的约定方式。如果说通信的两端都在你的处理范围内（比如cookies操作），你当然可以随自己喜欢用utf-8甚至其他。如何将字符值限制为latin1呢？在Python3（而且只需在Python3）中进行以下操作：</p>
-
-<pre><code>return cookie_value.encode('utf-8').decode('latin1')
-</code></pre>
-
-<p>除此之外，还有种方式是把utf-8编码为unicode，然后WSGI自己会把编码转为latin1，这样其实相当于把错误的utf-8值转化为latin1发送出去，然后接收的时候按顺序反着来一遍，也能得到正确的结果。</p>
-
-<p>当然这个方法比较丑陋，这也解释了为什么你直接把utf-8直接放在header里是可行的。并且只有cookies的header可以这么玩。不管怎么说这种做法都显得不可靠。</p>
-
-<p>另一个WSGI会出问题的地方是 <code>PATH_INFO / SCRIPT_NAME</code> 元组，不过你用Python3的时候，框架自身会帮你解决这个问题。</p>
-
-<p>地址：<a href="http://lucumr.pocoo.org/2011/1/22/forwards-compatible-python/">http://lucumr.pocoo.org/2011/1/22/forwards-compatible-python/</a></p>
+<h5>
+<a id="公众号" class="anchor" href="#%E5%85%AC%E4%BC%97%E5%8F%B7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>公众号：</h5>
 
       <footer class="site-footer">
 
